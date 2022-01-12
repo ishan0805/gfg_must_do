@@ -1,0 +1,35 @@
+DFS -(V+E)
+BFS -(V+E)
+
+Topological Sort - Job sequencing (J2 finishes after J1) 
+works on Acyclic Graphs only.
+
+
+By Bfs - 
+Steps-
+Give indegree to all the vertex ,
+Add vertex with 0 indgree to the queue, 
+While processing the vertex decrease the indegree of its adjecents ,
+If adjecents indgree is 0 add to queue .
+
+By Dfs -
+Idea - use nature of recursion that last reached node will be processed first.
+Steps-
+Maintain a stack , in which put the element after processing of it's
+neighbours is done .
+Print the elenets in stack .
+
+Applications of Topological Sort-
+
+We can check for  presence of cycle in undirected graph by bfs topological sort 
+step-
+Maintain a counter for all the 0 indegree vertice processed .
+if the final count is same as the No. of Vertices then cycle is not present.
+Idea- 
+If a cycle is present then in that cycle Vertices will be depended on each other,
+so indegree can't be zero for atleast one of the vertice.
+
+
+
+
+
