@@ -2,7 +2,7 @@ DFS -(V+E)
 BFS -(V+E)
 
 Topological Sort - Job sequencing (J2 finishes after J1) 
-works on Acyclic Graphs only.
+works on Acyclic Directed Graphs only.
 
 
 By Bfs - 
@@ -21,13 +21,37 @@ Print the elenets in stack .
 
 Applications of Topological Sort-
 
-We can check for  presence of cycle in undirected graph by bfs topological sort 
+1. We can check for  presence of cycle in undirected graph by bfs topological sort 
 step-
 Maintain a counter for all the 0 indegree vertice processed .
 if the final count is same as the No. of Vertices then cycle is not present.
 Idea- 
 If a cycle is present then in that cycle Vertices will be depended on each other,
 so indegree can't be zero for atleast one of the vertice.
+
+2. Shortest path in Directed Weighted Acyclic graph in O(V+E)
+
+step-
+Find topological sort .
+traverse topological sort , perform relax operation to all the adjecents 
+vertices of the selected vertice in order of topological sort .
+Idea-
+This workes as a set minimum path is traverse because of topological sort .
+
+Strongly Connected Component in Directed Graph
+A Component in which every vertex is reachable by any other vertex
+
+Kosaraju's Algorithm
+It is used to found all the Strongly Connected Component in Directed Graph .
+
+Steps 
+Perform topological sort by dfs to find the order of vertices in decreasing 
+order of finish time .
+reverse the graph .
+perform dfs with the order found by the  stack .
+increase count when recursion is over .
+
+
 
 
 
