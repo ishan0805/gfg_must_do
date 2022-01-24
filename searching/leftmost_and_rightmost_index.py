@@ -1,7 +1,8 @@
 """
 In binary search always increase the begin = mid+1 to avoid infinite loop 
 this is because for floor nature of division 
-
+Or 
+DO begin!=end-1
 """
 
 
