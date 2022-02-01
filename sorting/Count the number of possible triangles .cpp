@@ -1,3 +1,5 @@
+
+// use two pointer , start with n^3 to n^2
 class Solution
 {
 public:
@@ -6,14 +8,22 @@ public:
     {
         sort(arr, arr + n);
         int ans = 0;
-        for (int i = 0; i < n; i++)
+        for (int i = n - 1; i > 1; i--)
         {
-            for (int j = i + 1; j < n - 1; j++)
+            int j = 0;
+            int k = i - 1;
+            while (k > j)
             {
-                int sum = arr[i] + arr[j];
-                auto pos = lower_bound(arr, arr + n, sum) - arr;
-
-                ans += (pos - j) - 1;
+                int sum = arr[j] + arr[k];
+                if (sum > arr[i])
+                {
+                    ans += (k - j);
+                    k--;
+                }
+                else
+                {
+                    j++;
+                }
             }
         }
         return ans;
