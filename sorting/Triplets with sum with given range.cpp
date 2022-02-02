@@ -1,3 +1,4 @@
+// In two pointer if less start from begin , if more start from end
 class Solution
 {
 
