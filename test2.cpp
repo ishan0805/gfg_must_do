@@ -102,47 +102,49 @@ vector<ll> preffixsum(vll &a, ll n)
     }
     return pre;
 }
-bool check(ll a, ll b, ll c)
+
+vector<vector<int>> check(
+    vector<string> arr)
 {
-    return b - a == c - b;
+    vector<vector<int>> ans;
+    for (auto s : arr)
+    {
+        int c = 0;
+        string temp = "";
+        vector<int> v;
+        for (int i = 0; i < s.size(); i++)
+        {
+            if (s[i] == ' ')
+            {
+                if (c == 0)
+                {
+                    if (temp == "discount")
+                    {
+                        v.push_back(0);
+                    }
+                }
+                else
+                {
+                    v.push_back(stoi(temp));
+                }
+                temp = "";
+                c++;
+            }
+            else
+            {
+                temp += s[i];
+            }
+        }
+        v.push_back(stoi(temp));
+        ans.push_back(v);
+    }
+    return ans;
 }
+
 void solve()
 {
-    ll a, b, c;
-    cin >> a >> b >> c;
-    if (b - a == c - b)
-    {
-        cout << "yes\n";
-        return;
-    }
-    // First c
-    ll d = b - a;
-    if ((b + d) % c == 0 && (b + d) != 0)
-    {
-        cout << "yes\n";
-        return;
-    }
-    // second b
-    d = (c - a);
-    if (d % 2 == 0)
 
-    {
-        d /= 2;
-        if ((a + d) % b == 0 && (a + d) != 0)
-        {
-            cout << "yes\n";
-            return;
-        }
-    }
-    // third a
-    d = (c - b);
-    if ((b - d) % a == 0 && (b - d) != 0)
-    {
-
-        cout << "yes\n";
-        return;
-    }
-    cout << "no\n";
+    // cout << (a + b) / 4 << "\n";
 }
 
 int main()
@@ -153,7 +155,16 @@ int main()
     cin >> t;
     while (t--)
     {
-        solve();
+        // solve();
+        vector<vector<int>> ans = check({"discount 20 49", "discount 20 49 60"});
+        for (auto v : ans)
+        {
+            for (auto i : v)
+            {
+                cout << i << " ";
+            }
+            cout << "\n";
+        }
     }
 
     return 0;
