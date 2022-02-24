@@ -108,41 +108,33 @@ bool check(ll a, ll b, ll c)
 }
 void solve()
 {
-    ll a, b, c;
-    cin >> a >> b >> c;
-    if (b - a == c - b)
+    string s;
+    cin >> s;
+    cout << s;
+    string t = "";
+    map<string, int> m;
+    for (char ch : s)
     {
-        cout << "yes\n";
-        return;
-    }
-    // First c
-    ll d = b - a;
-    if ((b + d) % c == 0 && (b + d) != 0)
-    {
-        cout << "yes\n";
-        return;
-    }
-    // second b
-    d = (c - a);
-    if (d % 2 == 0)
-
-    {
-        d /= 2;
-        if ((a + d) % b == 0 && (a + d) != 0)
+        if (ch == ' ')
         {
-            cout << "yes\n";
-            return;
+            m[t]++;
+            t = "";
+        }
+        else
+        {
+            t += ch;
+        }
+        cout << t;
+    }
+    m[t]++;
+    for (auto p : m)
+    {
+        if (p.second > 1)
+        {
+            cout << p.first << " ";
         }
     }
-    // third a
-    d = (c - b);
-    if ((b - d) % a == 0 && (b - d) != 0)
-    {
-
-        cout << "yes\n";
-        return;
-    }
-    cout << "no\n";
+    cout << "\n";
 }
 
 int main()
@@ -150,7 +142,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     ll t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
     {
         solve();
