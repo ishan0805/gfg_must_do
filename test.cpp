@@ -102,39 +102,74 @@ vector<ll> preffixsum(vll &a, ll n)
     }
     return pre;
 }
-bool check(ll a, ll b, ll c)
+bool ok(int i, ll sum, vector<int> &ans, vector<vector<int>> &dp, vector<int> &a, int n)
 {
-    return b - a == c - b;
+    if (sum == 0 && ans.size() == n)
+    {
+        return true;
+    }
+    if (sum <= 0 && i < 0)
+    {
+        return false;
+    }
+    if (dp[i][sum] == -1)
+    {
+        dp[i][sum] = 0;
+        if (ans.size() == 0 || ans.back() != a[i])
+        {
+            ans.push_back(a[i]);
+            if (ok(i - 1, sum - a[i], ans, dp, a, n))
+            {
+                dp[i][sum] = 1;
+            }
+            else
+            {
+                ans.pop_back();
+                if (ok(i - 1, sum, ans, dp, a, n))
+                {
+                    dp[i][sum] = 1;
+                }
+            }
+        }
+        else if (ok(i + 1, sum, ans, dp, a, n))
+        {
+            dp[i][sum] = 1;
+        }
+    }
+    return dp[i][sum];
 }
-void solve()
+void solve(int t)
 {
-    string s;
-    cin >> s;
-    cout << s;
-    string t = "";
-    map<string, int> m;
-    for (char ch : s)
+    ll n;
+    cin >> n;
+    vector<int> a;
+    ll sum = 0;
+    rep(i, n)
     {
-        if (ch == ' ')
-        {
-            m[t]++;
-            t = "";
-        }
-        else
-        {
-            t += ch;
-        }
-        cout << t;
+        a.push_back(i + 1);
+        cout << i + 1 << " ";
+        sum += a.back();
     }
-    m[t]++;
-    for (auto p : m)
+
+    cout << endl;
+    rep(i, n)
     {
-        if (p.second > 1)
-        {
-            cout << p.first << " ";
-        }
+        ll x;
+        cin >> x;
+        a.push_back(x);
+        sum += a.back();
     }
-    cout << "\n";
+    sort(all(a));
+    sum = sum / 2;
+    vector<vector<int>> dp(n * 2, vector<int>(sum + 2, -1));
+    vector<int> ans;
+    ok(n * 2 - 1, sum, ans, dp, a, n);
+
+    for (auto r : ans)
+    {
+        cout << r << " ";
+    }
+    cout << endl;
 }
 
 int main()
@@ -142,10 +177,10 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     ll t = 1;
-    // cin >> t;
-    while (t--)
+    cin >> t;
+    for (int i = 1; i <= t; i++)
     {
-        solve();
+        solve(i);
     }
 
     return 0;
