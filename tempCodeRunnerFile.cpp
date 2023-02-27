@@ -1,0 +1,1 @@
+  whenEqual(a,i,j,ans);

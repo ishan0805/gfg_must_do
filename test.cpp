@@ -102,74 +102,105 @@ vector<ll> preffixsum(vll &a, ll n)
     }
     return pre;
 }
-bool ok(int i, ll sum, vector<int> &ans, vector<vector<int>> &dp, vector<int> &a, int n)
-{
-    if (sum == 0 && ans.size() == n)
+
+void whenEqual(vector<ll>&a,int &i,int &j,vector<ll>&ans)
+{ 
+    int l=i,r=j;
+    if(i==j)
     {
-        return true;
+        ans.push_back(a[i]);
+        i++;
+        j--;
+        return;
     }
-    if (sum <= 0 && i < 0)
+    while(l!=r&&a[l]==a[r])
     {
-        return false;
+        l++;
+        
+        r--;
+
     }
-    if (dp[i][sum] == -1)
+    if(a[l]>a[r])
     {
-        dp[i][sum] = 0;
-        if (ans.size() == 0 || ans.back() != a[i])
+        if(a[l]>a[i])
         {
-            ans.push_back(a[i]);
-            if (ok(i - 1, sum - a[i], ans, dp, a, n))
+            while(i<=l)
             {
-                dp[i][sum] = 1;
-            }
-            else
-            {
-                ans.pop_back();
-                if (ok(i - 1, sum, ans, dp, a, n))
-                {
-                    dp[i][sum] = 1;
-                }
+                ans.push_back(a[i]);
+                i++;
             }
         }
-        else if (ok(i + 1, sum, ans, dp, a, n))
+        else
         {
-            dp[i][sum] = 1;
+            int t=l-i;
+            t*=2;
+            while(t--)
+            {
+                ans.push_back(a[i]);
+            }
+            i=l;
+            j=r;
+        }
+        
+    }
+    else
+    {
+        if(a[r]>a[j])
+        {
+            while(j>=r)
+            {
+                ans.push_back(a[j]);
+                j--;
+            }
+        }
+        else
+        {
+            int t=l-i;
+            t*=2;
+            while(t--)
+            {
+                ans.push_back(a[i]);
+            }
+            i=l;
+            j=r;
         }
     }
-    return dp[i][sum];
+
 }
-void solve(int t)
+
+void solve()
 {
-    ll n;
-    cin >> n;
-    vector<int> a;
-    ll sum = 0;
-    rep(i, n)
-    {
-        a.push_back(i + 1);
-        cout << i + 1 << " ";
-        sum += a.back();
-    }
+   ll n;
+   cin>>n;
+   vll a(n);
+   rep(i,n)
+   {
+       cin>>a[i];
+   }
+   vll ans;
+   int i=0,j=n-1;
+   while(i<=j)
+   {
+       if(a[i]==a[j])
+       {
+           whenEqual(a,i,j,ans);
+       }
+       else if(a[i]>a[j])
+       {
+           ans.push_back(a[i]);
+           i++;
+       }
+       else
+       {
+           ans.push_back(a[j]);
+           j--;
+       }
+       
+   }
+   print(ans,n);
 
-    cout << endl;
-    rep(i, n)
-    {
-        ll x;
-        cin >> x;
-        a.push_back(x);
-        sum += a.back();
-    }
-    sort(all(a));
-    sum = sum / 2;
-    vector<vector<int>> dp(n * 2, vector<int>(sum + 2, -1));
-    vector<int> ans;
-    ok(n * 2 - 1, sum, ans, dp, a, n);
 
-    for (auto r : ans)
-    {
-        cout << r << " ";
-    }
-    cout << endl;
+    
 }
 
 int main()
@@ -177,11 +208,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     ll t = 1;
-    cin >> t;
-    for (int i = 1; i <= t; i++)
+    //cin>>t;
+    while(t--)
     {
-        solve(i);
+       solve();
     }
-
+    
     return 0;
 }
